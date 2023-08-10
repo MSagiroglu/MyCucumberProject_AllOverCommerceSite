@@ -366,7 +366,7 @@ public class ReusableMethods {
         Driver.driver.findElement(By.id("passoword")).sendKeys(password);
         Driver.driver.findElement(By.id("confirm_pwd")).sendKeys(password);
         ReusableMethods.click(Driver.driver.findElement(By.xpath("//input[@value=\"Register\"]")));
-       //Assert.assertTrue(wait.until(ExpectedConditions.titleIs("Vendor Store › Setup Wizard")), "REgistered user titel is not as expected");
+        //Assert.assertTrue(wait.until(ExpectedConditions.titleIs("Vendor Store › Setup Wizard")), "REgistered user titel is not as expected");
         Driver.driver.navigate().back();
         AllOverCommerce allOverCommerce = new AllOverCommerce();
         Keys.chord(Keys.END);

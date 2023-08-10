@@ -31,7 +31,7 @@ public class US_01 {
 
     @And("Username kutucuğuna geçerli bir username girer")
     public void usernameKutucugunaGecerliBirUsernameGirer() {
-        allOverCommerce.username.sendKeys(faker.name().firstName());
+        allOverCommerce.username.sendKeys(faker.name().firstName()+faker.number().numberBetween(1,100));
     }
 
     @And("Mail kutucuğuna geçerli bir mail girer")
@@ -72,6 +72,18 @@ public class US_01 {
 
     @When("Sayfayı Kapatır")
     public void sayfayıKapatır() {
+        Driver.closeDriver();
+    }
+
+    @When("Sekmeleri Kapatır")
+    public void sekmeleriKapatır() {
         Driver.quitDriver();
+    }
+
+    @Then("Kayıt işleminin başarıyla gerçekleşmediğini doğrular")
+    public void kayıtIslemininBasarıylaGerceklesmediginiDogrular() {
+        String message=allOverCommerce.checkBox.getAttribute("validationMessage");
+        Assert.assertTrue(message.contains("İlerlemek istiyorsanız lütfen bu kutuyu işaretleyin."));
+
     }
 }
