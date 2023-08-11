@@ -12,8 +12,9 @@ import org.openqa.selenium.WindowType;
 
 
 public class US_01 {
-    AllOverCommerce allOverCommerce= new AllOverCommerce();
+    AllOverCommerce allOverCommerce = new AllOverCommerce();
     Faker faker = new Faker();
+
     @Given("AllOverCommerce sitesine gider")
     public void allovercommerceSitesineGider() {
         Driver.getDriver().get(ConfigReader.getProperty("allOverCommerceUrl"));
@@ -29,24 +30,6 @@ public class US_01 {
 
     }
 
-    @And("Username kutucuğuna geçerli bir username girer")
-    public void usernameKutucugunaGecerliBirUsernameGirer() {
-        allOverCommerce.username.sendKeys(faker.name().firstName()+faker.number().numberBetween(1,100));
-    }
-
-    @And("Mail kutucuğuna geçerli bir mail girer")
-    public void mailKutucugunaGecerliBirMailGirer() {
-       allOverCommerce.registerEmail.sendKeys(Keys.CONTROL,"v");
-
-    }
-
-    @And("Password kutucuğuna geçerli bir password girer")
-    public void passwordKutucugunaGecerliBirPasswordGirer() {
-        String password = faker.internet().password();
-        allOverCommerce.registerPassword.sendKeys(password);
-    }
-
-
     @And("I agree to the privacy policy kutucuğuna tıklar")
     public void ıAgreeToThePrivacyPolicyKutucugunaTıklar() {
         allOverCommerce.checkBox.click();
@@ -60,9 +43,7 @@ public class US_01 {
     @Then("Kayıt işleminin başarıyla gerçekleştiğini doğrular")
     public void kayıtIslemininBasarıylaGerceklestiginiDogrular() {
         Assert.assertTrue(allOverCommerce.verifySignOut.isDisplayed());
-
     }
-
 
 
     @But("Kullanıcı {int} saniye bekler")
@@ -82,8 +63,27 @@ public class US_01 {
 
     @Then("Kayıt işleminin başarıyla gerçekleşmediğini doğrular")
     public void kayıtIslemininBasarıylaGerceklesmediginiDogrular() {
-        String message=allOverCommerce.checkBox.getAttribute("validationMessage");
-        Assert.assertTrue(message.contains("İlerlemek istiyorsanız lütfen bu kutuyu işaretleyin."));
+        if (!allOverCommerce.checkBox.isSelected()){
+            String message = allOverCommerce.checkBox.getAttribute("validationMessage");
+            Assert.assertTrue(message.contains("İlerlemek istiyorsanız lütfen bu kutuyu işaretleyin."));
+        } else if (allOverCommerce.username.getAttribute("validationMessage")!="") {
+            String message = allOverCommerce.username.getAttribute("validationMessage");
+            Assert.assertTrue(message.contains("Lütfen bu alanı doldurun."));
+        }
+    }
 
+    @And("Username kutucuğuna geçerli bir {string} girer")
+    public void usernameKutucugunaGecerliBirGirer(String username) {
+        allOverCommerce.username.sendKeys(faker.name().firstName() + faker.number().numberBetween(1, 100));
+    }
+
+    @And("Mail kutucuğuna geçerli bir {string} mail girer")
+    public void mailKutucugunaGecerliBirMailGirer(String mail) {
+        allOverCommerce.registerEmail.sendKeys(Keys.CONTROL, "v");
+    }
+
+    @And("Password kutucuğuna geçerli bir {string} girer")
+    public void passwordKutucugunaGecerliBirPasswordGirer(String password) {
+        allOverCommerce.registerPassword.sendKeys(faker.internet().password());
     }
 }
