@@ -4,9 +4,13 @@ import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
+
 @RunWith(Cucumber.class)//-->Test çalıştırıcı Notasyon(Cucumber ile JUnit i entegre olmasını sağlar)
 @CucumberOptions(
-        plugin = {"pretty"},
+        plugin = {"pretty",
+                "html:projectReports/US_01/default-cucumber-reports.html",
+                "json:target/json-reports/cucumber1.json",
+                "junit:target/xml-report/cucumber.xml"},
         features = "src/test/resources/features",
         glue = {"allOverCommerce/stepdefinitions"},
         tags = "@US01",//-->  and kulansaydık her iki tag'a sahip olan Scenario yu çalıştırır.
@@ -15,4 +19,7 @@ import org.junit.runner.RunWith;
         monochrome = false
 )
 public class Runner {
+    //"html:projectReports/US_01/default-cucumber-reports.html",
+
+
 }
