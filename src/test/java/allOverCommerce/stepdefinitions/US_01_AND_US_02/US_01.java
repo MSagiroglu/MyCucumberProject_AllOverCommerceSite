@@ -5,10 +5,13 @@ import allOverCommerce.utilities.ConfigReader;
 import allOverCommerce.utilities.Driver;
 import allOverCommerce.utilities.ReusableMethods;
 import com.github.javafaker.Faker;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.*;
 import org.junit.Assert;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WindowType;
+
+import java.util.Map;
 
 
 public class US_01 {
@@ -63,10 +66,10 @@ public class US_01 {
 
     @Then("Kayıt işleminin başarıyla gerçekleşmediğini doğrular")
     public void kayıtIslemininBasarıylaGerceklesmediginiDogrular() {
-        if (!allOverCommerce.checkBox.isSelected()){
+        if (!allOverCommerce.checkBox.isSelected()) {
             String message = allOverCommerce.checkBox.getAttribute("validationMessage");
             Assert.assertTrue(message.contains("İlerlemek istiyorsanız lütfen bu kutuyu işaretleyin."));
-        } else if (allOverCommerce.username.getAttribute("validationMessage")!="") {
+        } else if (allOverCommerce.username.getAttribute("validationMessage") != "") {
             String message = allOverCommerce.username.getAttribute("validationMessage");
             Assert.assertTrue(message.contains("Lütfen bu alanı doldurun."));
         }
@@ -85,5 +88,37 @@ public class US_01 {
     @And("Password kutucuğuna geçerli bir {string} girer")
     public void passwordKutucugunaGecerliBirPasswordGirer(String password) {
         allOverCommerce.registerPassword.sendKeys(faker.internet().password());
+    }
+
+    @Then("Data table verilerini gerekli yerlere girer checkbox kutucuğuna tıklamadan kayıt olunamadığını doğrular")
+    public void dataTableVerileriniGerekliYerlereGirer(DataTable data) {
+
+        for (Map<String, String> w:data.asMaps()){
+            allOverCommerce.username.sendKeys(w.get("username"));
+            allOverCommerce.registerEmail.sendKeys(w.get("mail"));
+            allOverCommerce.registerPassword.sendKeys(w.get("password"));
+            allOverCommerce.signUp.click();
+            String message = allOverCommerce.checkBox.getAttribute("validationMessage");
+            Assert.assertTrue(message.contains("İlerlemek istiyorsanız lütfen bu kutuyu işaretleyin."));
+            Driver.getDriver().navigate().refresh();
+            allOverCommerce.registerButton.click();
+        }
+
+        //allOverCommerce.username.sendKeys(data.row(1).get(0));
+        //allOverCommerce.registerEmail.sendKeys(data.row(1).get(1));
+        //allOverCommerce.registerPassword.sendKeys(data.row(1).get(2));
+        //allOverCommerce.signUp.click();
+        //String message = allOverCommerce.checkBox.getAttribute("validationMessage");
+        //Assert.assertTrue(message.contains("İlerlemek istiyorsanız lütfen bu kutuyu işaretleyin."));
+        //Driver.getDriver().navigate().refresh();
+        //allOverCommerce.registerButton.click();
+        //allOverCommerce.username.sendKeys(data.row(2).get(0));
+        //allOverCommerce.registerEmail.sendKeys(data.row(2).get(1));
+        //allOverCommerce.registerPassword.sendKeys(data.row(2).get(2));
+        //allOverCommerce.signUp.click();
+        //message = allOverCommerce.checkBox.getAttribute("validationMessage");
+        //Assert.assertTrue(message.contains("İlerlemek istiyorsanız lütfen bu kutuyu işaretleyin."));
+//
+
     }
 }
