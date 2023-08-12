@@ -3,7 +3,7 @@ Feature: US_001Siteye kullanıcı (Müşteri) olarak kayıt yapılabilmeli.(Regi
   Background: Siteye gidiş
     Given  AllOverCommerce sitesine gider
 
-  @US01
+
   Scenario Outline: TC_01 Pozitif Register İşlemi
     And  Register butonunu tıklar
     And  Username kutucuğuna geçerli bir "<username>" girer
@@ -31,8 +31,9 @@ Feature: US_001Siteye kullanıcı (Müşteri) olarak kayıt yapılabilmeli.(Regi
     #And I agree to the privacy policy kutucuğuna tıklamdan step devam eder
     When Sign up butonuna tıklar
     Then Kayıt işleminin başarıyla gerçekleşmediğini doğrular
-    * Sekmeleri Kapatır
+    #* Sekmeleri Kapatır
     Examples:
+      | username | mail | password |
       | username | mail | password |
       | username | mail | password |
       | username | mail | password |
@@ -53,5 +54,20 @@ Feature: US_001Siteye kullanıcı (Müşteri) olarak kayıt yapılabilmeli.(Regi
       | mail | password |
       | mail | password |
       | mail | password |
+
+
+  Scenario: TC04 Negatif Register İşlemi Data Table ile
+    And Register butonunu tıklar
+    Then Data table verilerini gerekli yerlere girer checkbox kutucuğuna tıklamadan kayıt olunamadığını doğrular
+    #And I agree to the privacy policy kutucuğuna tıklamdan step devam eder
+      | username | mail                | password      |
+      | Mustafa1 | fasdfasfa@gmail.com | ewqwreqwrqwer |
+      | Leyla1   | dfgdsg@gmail.com    | safasdfas     |
+      | Latife1  | fewgfg@gmail.com    | safasdfas     |
+      | Erol1    | hterthg@gmail.com   | safasdfas     |
+
+    * Sekmeleri Kapatır
+
+
 
 
