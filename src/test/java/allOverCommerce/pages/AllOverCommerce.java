@@ -34,10 +34,10 @@ public class AllOverCommerce {
     public WebElement verifySignOut;
     @FindBy(xpath = "(//p[@class='submit-status'])[2]")//Register sayfasındaki"An account is already registered with your email address and username"mesajı.
     public WebElement AnAccountIsAlreadyRegisteredText;
-
-
-
-
+    @FindBy(xpath = "//*[text()='Sign Out']")//SignOut butonu
+    public WebElement signOut;
+    @FindBy(xpath = "//*[text()='Log out']")//SignOut butonu
+    public WebElement logOut1;
 
 
 

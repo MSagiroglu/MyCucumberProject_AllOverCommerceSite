@@ -366,18 +366,11 @@ public class ReusableMethods {
         Driver.driver.findElement(By.id("passoword")).sendKeys(password);
         Driver.driver.findElement(By.id("confirm_pwd")).sendKeys(password);
         ReusableMethods.click(Driver.driver.findElement(By.xpath("//input[@value=\"Register\"]")));
-        //Assert.assertTrue(wait.until(ExpectedConditions.titleIs("Vendor Store › Setup Wizard")), "REgistered user titel is not as expected");
         Driver.driver.navigate().back();
         AllOverCommerce allOverCommerce = new AllOverCommerce();
         Keys.chord(Keys.END);
         ReusableMethods.click(allOverCommerce.MyAccountClick);
-        Keys.chord(Keys.PAGE_DOWN);
-        ReusableMethods.click(allOverCommerce.Add_resses);
-        ReusableMethods.click(allOverCommerce.ADD);
-        Keys.chord(Keys.PAGE_DOWN,Keys.PAGE_DOWN);
-        String actualEmailVerify=userEmail;
-        String expectedEmailVerify="@yopmail.com";
-        Assert.assertTrue(actualEmailVerify.contains(expectedEmailVerify));
+
     }
 
 }

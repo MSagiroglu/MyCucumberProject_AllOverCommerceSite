@@ -12,14 +12,12 @@ import org.junit.runner.RunWith;
                 "json:target/json-reports/cucumber1.json",
                 "junit:target/xml-report/cucumber.xml",
                 "rerun:failedScenarios/failedRerun.txt"},
-        features = "src/test/resources/features",
+        features = "@failedScenarios/failedRerun.txt",// @ işareti koyuyoruz dosya yolunun başında olmalı
         glue = {"allOverCommerce/stepdefinitions"},
-        tags = "@excel",//-->  and kulansaydık her iki tag'a sahip olan Scenario yu çalıştırır.
-        //--> Eğer Feature'ın tag'ini @all yaparsak o featurenin tüm testlerini çalıştırır ise
         dryRun = false, //-->true seçersek scenarioları kontrol eder browser'ı çalıştırmaz
         monochrome = false
 )
-public class Runner {
+public class FailedRunner {
     //"html:projectReports/US_01/default-cucumber-reports.html",
 
 

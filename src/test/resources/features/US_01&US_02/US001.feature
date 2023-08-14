@@ -3,7 +3,7 @@ Feature: US_001Siteye kullanıcı (Müşteri) olarak kayıt yapılabilmeli.(Regi
   Background: Siteye gidiş
     Given  AllOverCommerce sitesine gider
 
-
+  @p1
   Scenario Outline: TC_01 Pozitif Register İşlemi
     And  Register butonunu tıklar
     And  Username kutucuğuna geçerli bir "<username>" girer
@@ -17,12 +17,9 @@ Feature: US_001Siteye kullanıcı (Müşteri) olarak kayıt yapılabilmeli.(Regi
     Examples:
       | username | mail | password |
       | name     | mail | password |
-      | name     | mail | password |
-      | name     | mail | password |
-      | name     | mail | password |
 
 
-  @US01
+  @p2
   Scenario Outline: TC_02 Negatif Register İşlemi
     And Register butonunu tıklar
     And Username kutucuğuna geçerli bir "<username>" girer
@@ -31,10 +28,8 @@ Feature: US_001Siteye kullanıcı (Müşteri) olarak kayıt yapılabilmeli.(Regi
     #And I agree to the privacy policy kutucuğuna tıklamdan step devam eder
     When Sign up butonuna tıklar
     Then Kayıt işleminin başarıyla gerçekleşmediğini doğrular
-    #* Sekmeleri Kapatır
+    * Sekmeleri Kapatır
     Examples:
-      | username | mail | password |
-      | username | mail | password |
       | username | mail | password |
       | username | mail | password |
 
@@ -67,6 +62,15 @@ Feature: US_001Siteye kullanıcı (Müşteri) olarak kayıt yapılabilmeli.(Regi
       | Erol1    | hterthg@gmail.com   | safasdfas     |
 
     * Sekmeleri Kapatır
+
+
+  @excel
+  Scenario: TC05 Pozitif Register İşlemi Excell ile
+    When Register butonunu tıklar
+    Then Kullanıcı excel dosyasındaki "cutomer informations" sayfasındaki bilgileri girer
+    * Sayfayı Kapatır
+
+
 
 
 

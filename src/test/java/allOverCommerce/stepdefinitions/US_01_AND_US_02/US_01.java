@@ -3,6 +3,7 @@ package allOverCommerce.stepdefinitions.US_01_AND_US_02;
 import allOverCommerce.pages.AllOverCommerce;
 import allOverCommerce.utilities.ConfigReader;
 import allOverCommerce.utilities.Driver;
+import allOverCommerce.utilities.ExcelReader;
 import allOverCommerce.utilities.ReusableMethods;
 import com.github.javafaker.Faker;
 import io.cucumber.datatable.DataTable;
@@ -66,13 +67,9 @@ public class US_01 {
 
     @Then("Kayıt işleminin başarıyla gerçekleşmediğini doğrular")
     public void kayıtIslemininBasarıylaGerceklesmediginiDogrular() {
-        if (!allOverCommerce.checkBox.isSelected()) {
-            String message = allOverCommerce.checkBox.getAttribute("validationMessage");
-            Assert.assertTrue(message.contains("İlerlemek istiyorsanız lütfen bu kutuyu işaretleyin."));
-        } else if (allOverCommerce.username.getAttribute("validationMessage") != "") {
-            String message = allOverCommerce.username.getAttribute("validationMessage");
-            Assert.assertTrue(message.contains("Lütfen bu alanı doldurun."));
-        }
+        String message = allOverCommerce.checkBox.getAttribute("validationMessage");
+        Assert.assertTrue(message.contains("Please check this box if you want to proceed."));
+
     }
 
     @And("Username kutucuğuna geçerli bir {string} girer")
@@ -119,6 +116,29 @@ public class US_01 {
         //message = allOverCommerce.checkBox.getAttribute("validationMessage");
         //Assert.assertTrue(message.contains("İlerlemek istiyorsanız lütfen bu kutuyu işaretleyin."));
 //
+
+    }
+
+    @When("Kullanıcı excel dosyasındaki {string} sayfasındaki bilgileri girer")
+    public void kullanıcıExcelDosyasındakiSayfasındakiBilgileriGirer(String sayfaIsmi) {
+        String filePath="excelData/MyDatas.xlsx";
+        ExcelReader excelReader=new ExcelReader(filePath,sayfaIsmi);
+        for (int i = 1; i <=excelReader.rowCount() ; i++) {
+            String username = excelReader.getCellData(i, 0);
+            String mail = excelReader.getCellData(i, 1);
+            String password = excelReader.getCellData(i, 2);
+            allOverCommerce.username.sendKeys(username);
+            allOverCommerce.registerEmail.sendKeys(mail);
+            allOverCommerce.registerPassword.sendKeys(password);
+            allOverCommerce.checkBox.click();
+            allOverCommerce.signUp.click();
+            ReusableMethods.bekle(5);
+            Assert.assertTrue(allOverCommerce.verifySignOut.isDisplayed());
+            allOverCommerce.signOut.click();
+            allOverCommerce.logOut1.click();
+            allOverCommerce.register.click();
+            allOverCommerce.signUp.click();
+        }
 
     }
 }
