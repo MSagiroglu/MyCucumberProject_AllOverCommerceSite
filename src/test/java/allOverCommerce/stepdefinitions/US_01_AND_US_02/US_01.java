@@ -138,6 +138,10 @@ public class US_01 {
             allOverCommerce.logOut1.click();
             allOverCommerce.register.click();
             allOverCommerce.signUp.click();
+<<<<<<< HEAD
+=======
+
+>>>>>>> a2842cc477a5621eb5a709f981501e0a381aeb3a
         }
 
     }
